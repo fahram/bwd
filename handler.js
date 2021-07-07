@@ -32,6 +32,12 @@ const addBookHandler = (request, h) => {
     updatedAt,
   };
 
+  if (!name) {
+    return h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
+    }).code(400);
+  }
   books.push(newBook);
 
   const isSuccess = books.filter((book) => book.id === id).length > 0;
