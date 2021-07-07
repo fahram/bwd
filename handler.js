@@ -140,6 +140,13 @@ const editBookByIdHandler = (request, h) => {
     }).code(400);
   }
 
+  if (readPage > pageCount) {
+    return h.response({
+      status: 'fail',
+      message:
+      'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
+    }).code(400);
+  }
   const updatedAt = new Date().toISOString();
 
   const index = books.findIndex((book) => book.id === bookId);
