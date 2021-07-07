@@ -173,7 +173,7 @@ const editBookByIdHandler = (request, h) => {
 
   return h.response({
     status: 'fail',
-    message: 'Gagal memperbarui Buku. Id tidak ditemukan',
+    message: 'Gagal memperbarui buku. Id tidak ditemukan',
   }).code(404);
 };
 
