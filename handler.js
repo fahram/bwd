@@ -37,22 +37,18 @@ const addBookHandler = (request, h) => {
   const isSuccess = books.filter((book) => book.id === id).length > 0;
 
   if (isSuccess) {
-    const response = h.response({
+    return h.response({
       status: 'success',
       message: 'Buku berhasil ditambahkan',
       data: {
         bookId: id,
       },
-    });
-    response.code(201);
-    return response;
+    }).code(201);
   }
-  const response = h.response({
+  return h.response({
     status: 'fail',
     message: 'Buku gagal ditambahkan',
-  });
-  response.code(500);
-  return response;
+  }).code(500);
 };
 
 const getAllBooksHandler = () => ({
@@ -76,12 +72,10 @@ const getBookByIdHandler = (request, h) => {
     };
   }
 
-  const response = h.response({
+  return h.response({
     status: 'fail',
     message: 'Buku tidak ditemukan',
-  });
-  response.code(404);
-  return response;
+  }).code(404);
 };
 const editBookByIdHandler = (request, h) => {
   const {bookId} = request.params;
@@ -114,20 +108,16 @@ const editBookByIdHandler = (request, h) => {
       updatedAt,
     };
 
-    const response = h.response({
+    return h.response({
       status: 'success',
       message: 'Buku berhasil diperbarui',
-    });
-    response.code(200);
-    return response;
+    }).code(200);
   }
 
-  const response = h.response({
+  return h.response({
     status: 'fail',
     message: 'Gagal memperbarui Buku. Id tidak ditemukan',
-  });
-  response.code(404);
-  return response;
+  }).code(404);
 };
 
 
@@ -138,20 +128,16 @@ const deleteBookByIdHandler = (request, h) => {
 
   if (index !== -1) {
     books.splice(index, 1);
-    const response = h.response({
+    return h.response({
       status: 'success',
       message: 'Buku berhasil dihapus',
-    });
-    response.code(200);
-    return response;
+    }).code(200);
   }
 
-  const response = h.response({
+  return h.response({
     status: 'fail',
     message: 'Buku gagal dihapus. Id tidak ditemukan',
-  });
-  response.code(404);
-  return response;
+  }).code(404);
 };
 
 module.exports ={
