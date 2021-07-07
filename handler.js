@@ -132,6 +132,14 @@ const editBookByIdHandler = (request, h) => {
     readPage,
     reading,
   } = request.payload;
+
+  if (!name) {
+    return h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Mohon isi nama buku',
+    }).code(400);
+  }
+
   const updatedAt = new Date().toISOString();
 
   const index = books.findIndex((book) => book.id === bookId);
