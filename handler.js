@@ -64,12 +64,41 @@ const addBookHandler = (request, h) => {
   }).code(500);
 };
 
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books,
-  },
-});
+const getAllBooksHandler = (request) => {
+  let filteredBooks = [...books];
+  const {name, reading, finished} = request.query;
+
+  if (name && name.trim().length > 0) {
+    filteredBooks = filteredBooks.filter((book) =>
+      book.name.toLowerCase().includes(name.toLowerCase()),
+    );
+  }
+
+  const numReading = Number.parseInt(reading, 10);
+  if (!Number.isNaN(numReading)) {
+    filteredBooks = filteredBooks.filter(
+        (book) => book.reading === !!numReading,
+    );
+  }
+
+  const numFinished = Number.parseInt(finished, 10);
+  if (!Number.isNaN(numFinished)) {
+    filteredBooks = filteredBooks.filter(
+        (book) => book.finished === !!numFinished,
+    );
+  }
+
+  return {
+    status: 'success',
+    data: {
+      books: filteredBooks.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
+    },
+  };
+};
 
 const getBookByIdHandler = (request, h) => {
   const {bookId} = request.params;
